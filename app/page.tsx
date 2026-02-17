@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAccount, useBalance, useDisconnect, useSendTransaction } from 'wagmi';
-import { useWeb3Modal } from '@web3modal/wagmi/react';
+import { useAppKit } from '@reown/appkit/react';
 import { formatEther, parseEther } from 'viem';
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
   const { data: balance } = useBalance({
     address: address,
   });
-  const { open } = useWeb3Modal();
+  const { open } = useAppKit();
   const { disconnect } = useDisconnect();
   const { sendTransaction, isPending, isSuccess, error } = useSendTransaction();
 
@@ -35,7 +35,7 @@ export default function Home() {
               WalletConnect Demo
             </h1>
             <p className="text-lg text-zinc-600 dark:text-zinc-400">
-              Connect your wallet using Web3Modal
+              Connect your wallet using Reown AppKit
             </p>
           </div>
 
@@ -209,7 +209,7 @@ export default function Home() {
           {/* Info Section */}
           <div className="mt-8 pt-6 border-t border-zinc-200 dark:border-zinc-700">
             <p className="text-sm text-center text-zinc-500 dark:text-zinc-400">
-              This is a demo application showcasing WalletConnect integration with Web3Modal
+              This is a demo application showcasing WalletConnect integration with Reown AppKit
             </p>
           </div>
         </div>

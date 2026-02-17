@@ -1,23 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
+    config.externals ??= [];
+    if (Array.isArray(config.externals)) {
+      config.externals.push("pino-pretty", "lokijs", "encoding");
+    }
     config.resolve ??= {};
     config.resolve.fallback ??= {};
     Object.assign(config.resolve.fallback, {
-      "@base-org/account": false,
-      "@gemini-wallet/core": false,
-      "@metamask/sdk": false,
-      "@safe-global/safe-apps-sdk": false,
-      "@safe-global/safe-apps-provider": false,
-      "@solana/kit": false,
-      porto: false,
-      "porto/internal": false,
-      "pino-pretty": false,
+      "@react-native-async-storage/async-storage": false,
     });
     return config;
   },
-  serverExternalPackages: ["pino", "thread-stream"],
 };
 
 export default nextConfig;

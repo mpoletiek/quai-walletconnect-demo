@@ -1,14 +1,14 @@
 # Quai Network WalletConnect Demo
 
-A demonstration application showcasing WalletConnect integration with Web3Modal for the Quai Network. This Next.js application provides a simple interface to connect wallets and display wallet information including address and QUAI balance.
+A demonstration application showcasing WalletConnect integration with Reown AppKit for the Quai Network. This Next.js application provides a simple interface to connect wallets and display wallet information including address and QUAI balance.
 
 ## Purpose
 
-This project demonstrates how to integrate WalletConnect and Web3Modal with the Quai Network, providing a reference implementation for developers building dApps on Quai Network.
+This project demonstrates how to integrate WalletConnect and Reown AppKit with the Quai Network, providing a reference implementation for developers building dApps on Quai Network.
 
 ## Features
 
-- WalletConnect integration via Web3Modal
+- WalletConnect integration via Reown AppKit
 - Injected wallet connector support
 - Display wallet address and QUAI balance
 - Send QUAI transactions (injected or WalletConnect)
@@ -74,7 +74,7 @@ The injected connector (for browser extension wallets like MetaMask) supports:
 ### Current Wallet Support
 
 - **WalletConnect**: Works with wallets that support WalletConnect protocol
-- **Injected**: Works with browser extension wallets (read-only on Quai Network)
+- **Injected**: Works with browser extension wallets
 - **Pelagus**: Not currently supported via WalletConnect
 - **Blip**: QR code scanning support coming soon
 
@@ -90,17 +90,17 @@ For testing, you can send to your own address or use a faucet to obtain test QUA
 
 ## Project Structure
 
-- `app/lib/w3config.tsx` - Wagmi and Web3Modal configuration
-- `app/lib/quai.ts` - Quai Network chain definition for viem
+- `config/index.ts` - Quai Network chain definition and Wagmi adapter configuration
+- `config/AppKitProvider.tsx` - Reown AppKit provider with Wagmi and React Query
 - `app/page.tsx` - Main demo page with wallet connection and send transaction UI
-- `app/layout.tsx` - Root layout with Web3Modal provider
+- `app/layout.tsx` - Root layout with AppKit provider
 
 ## Technologies Used
 
 - [Next.js](https://nextjs.org) - React framework
 - [wagmi](https://wagmi.sh) - React Hooks for Ethereum
 - [viem](https://viem.sh) - TypeScript Ethereum library
-- [Web3Modal](https://web3modal.com) - Wallet connection UI
+- [Reown AppKit](https://docs.reown.com/appkit) - Wallet connection UI (successor to Web3Modal)
 - [WalletConnect](https://walletconnect.com) - Web3 wallet connection protocol
 - [Tailwind CSS](https://tailwindcss.com) - Styling
 
@@ -108,7 +108,7 @@ For testing, you can send to your own address or use a faucet to obtain test QUA
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [wagmi Documentation](https://wagmi.sh)
-- [Web3Modal Documentation](https://docs.walletconnect.com/web3modal)
+- [Reown AppKit Documentation](https://docs.reown.com/appkit)
 - [Quai Network](https://quai.network)
 
 ## License

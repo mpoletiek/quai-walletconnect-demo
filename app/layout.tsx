@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
-import { Web3ModalProvider } from "@/app/lib/w3config";
+import { AppKitProvider } from "@/config/AppKitProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,28 +17,28 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Quai Network WalletConnect Demo",
   description:
-    "A demonstration of WalletConnect and Web3Modal integration with Quai Network. Connect wallets, view balances, and send transactions.",
+    "A demonstration of WalletConnect and Reown AppKit integration with Quai Network. Connect wallets, view balances, and send transactions.",
   openGraph: {
     title: "Quai Network WalletConnect Demo",
     description:
-      "A demonstration of WalletConnect and Web3Modal integration with Quai Network.",
+      "A demonstration of WalletConnect and Reown AppKit integration with Quai Network.",
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+  const headersObj = await headers();
+  const cookies = headersObj.get("cookie");
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Web3ModalProvider>
-          {children}
-        </Web3ModalProvider>
+        <AppKitProvider cookies={cookies}>{children}</AppKitProvider>
       </body>
     </html>
   );
