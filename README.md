@@ -55,27 +55,26 @@ npm run dev
 ### Chain Support
 
 - **WalletConnect**: WalletConnect has native support for the Quai Network chain.
-- **Viem**: Viem does not include Quai Network in its default chain definitions. The Quai Network chain is manually defined in `app/lib/quai.ts` to work with wagmi/viem.
+- **Viem**: Viem does not include Quai Network in its default chain definitions. The Quai Network chain is defined in `config/index.ts` using `defineChain` from `@reown/appkit/networks`.
 
 ### Wallet Connectors
 
 #### Injected Connector
 
-The injected connector (for browser extension wallets like MetaMask) supports:
-- ✅ Read wallet addresses, balances, and chain information
-- ✅ Send transactions and interact with smart contracts
+The injected connector (for browser extension wallets like MetaMask and Pelagus) supports:
+- ✅ Full read and write capabilities
 
 #### WalletConnect Connector
 
 - ✅ Full read and write capabilities
-- ❌ **Pelagus wallet is not currently supported** out of the box with WalletConnect
+- ✅ **Pelagus wallet is supported** out of the box with WalletConnect
 - 🔜 **Future support**: WalletConnect QR code scanning is coming to Blip (Quai Network's mobile wallet)
 
 ### Current Wallet Support
 
 - **WalletConnect**: Works with wallets that support WalletConnect protocol
-- **Injected**: Works with browser extension wallets
-- **Pelagus**: Not currently supported via WalletConnect
+- **Injected**: Full read and write support for browser extension wallets
+- **Pelagus**: Supported via WalletConnect
 - **Blip**: QR code scanning support coming soon
 
 ## Testing Transactions
