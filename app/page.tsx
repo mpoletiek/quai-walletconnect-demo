@@ -1,16 +1,24 @@
 'use client';
 
-import { useAccount, useBalance, useDisconnect } from 'wagmi';
+import { useState, useEffect } from 'react';
+import { useAccount, useBalance, useDisconnect, useSendTransaction } from 'wagmi';
 import { useWeb3Modal } from '@web3modal/wagmi/react';
-import { formatEther } from 'viem';
+import { formatEther, parseEther } from 'viem';
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  const [recipient, setRecipient] = useState('');
+  const [amount, setAmount] = useState('');
+
+  useEffect(() => setMounted(true), []);
+
   const { address, isConnected } = useAccount();
   const { data: balance } = useBalance({
     address: address,
   });
   const { open } = useWeb3Modal();
   const { disconnect } = useDisconnect();
+  const { sendTransaction, isPending, isSuccess, error } = useSendTransaction();
 
   const formatAddress = (addr: string | undefined) => {
     if (!addr) return '';
@@ -33,7 +41,7 @@ export default function Home() {
 
           {/* Connection Status Card */}
           <div className="bg-zinc-50 dark:bg-zinc-900 rounded-xl p-6 mb-6 border border-zinc-200 dark:border-zinc-700">
-            {!isConnected ? (
+            {!mounted || !isConnected ? (
               <div className="text-center">
                 <div className="mb-4">
                   <div className="w-16 h-16 mx-auto bg-zinc-200 dark:bg-zinc-700 rounded-full flex items-center justify-center mb-4">
@@ -131,6 +139,60 @@ export default function Home() {
                       </span>
                     </div>
                   </div>
+                </div>
+
+                {/* Send Transaction */}
+                <div className="pt-4 border-t border-zinc-200 dark:border-zinc-700">
+                  <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-3">
+                    Send QUAI (Transaction Test)
+                  </label>
+                  <div className="space-y-3">
+                    <input
+                      type="text"
+                      placeholder="Recipient address (0x...)"
+                      value={recipient}
+                      onChange={(e) => setRecipient(e.target.value)}
+                      className="w-full px-4 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Amount (QUAI)"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      className="w-full px-4 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    <button
+                      onClick={() => {
+                        if (!recipient || !amount) return;
+                        sendTransaction(
+                          {
+                            to: recipient as `0x${string}`,
+                            value: parseEther(amount),
+                          },
+                          {
+                            onSuccess: () => {
+                              setRecipient('');
+                              setAmount('');
+                            },
+                          }
+                        );
+                      }}
+                      disabled={!recipient || !amount || isPending}
+                      className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-zinc-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+                    >
+                      {isPending ? 'Confirm in wallet...' : 'Send QUAI'}
+                    </button>
+                  </div>
+                  {isSuccess && (
+                    <p className="mt-2 text-sm text-green-600 dark:text-green-400">
+                      Transaction sent successfully.
+                    </p>
+                  )}
+                  {error && (
+                    <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+                      {error.message}
+                    </p>
+                  )}
                 </div>
 
                 {/* Change Wallet Button */}

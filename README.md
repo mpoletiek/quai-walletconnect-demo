@@ -11,6 +11,7 @@ This project demonstrates how to integrate WalletConnect and Web3Modal with the 
 - WalletConnect integration via Web3Modal
 - Injected wallet connector support
 - Display wallet address and QUAI balance
+- Send QUAI transactions (injected or WalletConnect)
 - Modern, responsive UI with dark mode support
 
 ## Getting Started
@@ -35,6 +36,12 @@ npm install
 NEXT_PUBLIC_WC_PROJECT_ID=your_project_id_here
 ```
 
+   For production or custom domains, optionally set the app URL (used in WalletConnect metadata):
+
+```env
+NEXT_PUBLIC_APP_URL=https://your-domain.com
+```
+
 4. Run the development server:
 
 ```bash
@@ -54,9 +61,9 @@ npm run dev
 
 #### Injected Connector
 
-The injected connector (for browser extension wallets like MetaMask) depends on the `eth_` namespace, which provides **read-only** access to the Quai Network blockchain. This means:
-- ✅ You can read wallet addresses, balances, and chain information
-- ❌ You **cannot** send transactions or interact with smart contracts through the injected connector
+The injected connector (for browser extension wallets like MetaMask) supports:
+- ✅ Read wallet addresses, balances, and chain information
+- ✅ Send transactions and interact with smart contracts
 
 #### WalletConnect Connector
 
@@ -71,11 +78,21 @@ The injected connector (for browser extension wallets like MetaMask) depends on 
 - **Pelagus**: Not currently supported via WalletConnect
 - **Blip**: QR code scanning support coming soon
 
+## Testing Transactions
+
+To test sending QUAI on Quai Network:
+
+1. **Connect** – Click "Connect Wallet" and connect via injected wallet (e.g. MetaMask) or WalletConnect (QR code).
+2. **Send** – Enter a recipient address and amount in the "Send QUAI" section, then click "Send QUAI".
+3. **Confirm** – Approve the transaction in your wallet.
+
+For testing, you can send to your own address or use a faucet to obtain test QUAI on Quai Network.
+
 ## Project Structure
 
 - `app/lib/w3config.tsx` - Wagmi and Web3Modal configuration
 - `app/lib/quai.ts` - Quai Network chain definition for viem
-- `app/page.tsx` - Main demo page with wallet connection UI
+- `app/page.tsx` - Main demo page with wallet connection and send transaction UI
 - `app/layout.tsx` - Root layout with Web3Modal provider
 
 ## Technologies Used

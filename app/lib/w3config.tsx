@@ -11,11 +11,12 @@ const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID;
 if (!projectId) throw new Error('Project ID is not set');
 
 // 2. Create Wagmi config
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 const metadata = {
-  name: 'My Web3 App',
-  description: 'A Next.js application with WalletConnect',
-  url: 'http://localhost:3001', // origin must match your domain
-  icons: ['http://localhost:3001/favicon.ico'],
+  name: 'Quai Network WalletConnect Demo',
+  description: 'WalletConnect and Web3Modal integration demo for Quai Network',
+  url: appUrl,
+  icons: [`${appUrl}/favicon.ico`],
 };
 
 const chains = [quai] as const;
