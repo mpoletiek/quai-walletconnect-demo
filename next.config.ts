@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       "@metamask/sdk": false,
       "@safe-global/safe-apps-sdk": false,
       "@safe-global/safe-apps-provider": false,
+      "@solana/kit": false,
       porto: false,
       "porto/internal": false,
       "pino-pretty": false,
